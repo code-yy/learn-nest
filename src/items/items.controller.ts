@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { identity } from 'rxjs';
 import { ItemStatus } from './item-status.enum';
 import { Item } from './item.model';
 import { ItemsService } from './items.service';
@@ -7,8 +8,13 @@ import { ItemsService } from './items.service';
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
   @Get()
-  findAll() {
+  findAll(): Item[] {
     return this.itemsService.findAll();
+  }
+
+  @Get(':id') // items/id
+  findById(@Param('id') id: string): Item {
+    return this.itemsService.findById(id);
   }
 
   @Post()
