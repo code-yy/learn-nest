@@ -8,8 +8,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { Item } from 'src/entities/item.entity';
 import { CreateItemDto } from './dto/create-item.dto';
-import { Item } from './item.model';
 import { ItemsService } from './items.service';
 
 @Controller('items')
@@ -26,8 +26,8 @@ export class ItemsController {
   }
 
   @Post()
-  create(@Body() CreateItemDto: CreateItemDto): Item {
-    return this.itemsService.create(CreateItemDto);
+  async create(@Body() CreateItemDto: CreateItemDto): Promise<Item> {
+    return await this.itemsService.create(CreateItemDto);
   }
 
   @Patch(':id')
