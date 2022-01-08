@@ -2,7 +2,7 @@ import { ItemStatus } from './../items/item-status.enum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class item {
+export class Item {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
