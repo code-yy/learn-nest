@@ -7,13 +7,15 @@ import { Item } from 'src/entities/item.entity';
 @Injectable()
 export class ItemsService {
   constructor(private readonly itemsRepository: ItemRepository) {}
+
   private items: Item[] = [];
-  findAll(): Item[] {
-    return this.items;
+
+  async findAll(): Promise<Item[]> {
+    return await this.itemsRepository.find();
   }
 
-  findById(id: string): Item {
-    const found = this.items.find((item) => item.id === id);
+  async findById(id: string): Promise<Item> {
+    const found = await this.itemsRepository.findOne(id);
     if (!found) {
       throw new NotFoundException();
     }
@@ -24,11 +26,11 @@ export class ItemsService {
     return await this.itemsRepository.createItem(CreateItemDto);
   }
 
-  updateStatus(id: string): Item {
-    const item = this.findById(id);
-    item.status = ItemStatus.SOLD_OUT;
-    return item;
-  }
+  // updateStatus(id: string): Item {
+  //   const item = this.findById(id);
+  //   item.status = ItemStatus.SOLD_OUT;
+  //   return item;
+  // }
 
   delete(id: string): void {
     this.items = this.items.filter((item) => item.id !== id);
